@@ -1,0 +1,14 @@
+﻿@using CES.Core.Models;
+@model PageInfo
+<div class="ap-order-header" id="ap-order-header">
+    <div class="ap-order-title">
+        <span class="ap-order-type ap-underline">@Model.prgName</span>
+        <span class="ap-order-quicklink am-icon-share" onclick="_menu.quickSettingClick1('@Model.prgID')"></span>
+    </div>
+    <div class="ap-wtf-btns">
+        <div class="ap-btn ap-btn-white" onclick="query(1)">@CES.Core.Common.CommonSupport.GetLanguageByCode("public_btn_query")</div>
+        <div class="ap-btn ap-btn-blue" id="btnPageConfig" onclick="_menu.pageConfigClick();">@CES.Core.Common.CommonSupport.GetLanguageByCode("public_btn_pagelayout")</div>
+        <div class="ap-btn ap-btn-white" onclick="_menu.exportClick()">@CES.Core.Common.CommonSupport.GetLanguageByCode("bmis15_excel_output")</div>
+        <div class="ap-btn ap-btn-blue" onclick="_menu.filterClick()">@CES.Core.Common.CommonSupport.GetLanguageByCode("public_btn_filter")</div>
+    </div>
+</div>

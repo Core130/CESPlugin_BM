@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_ReportLayout.cshtml";
+}
+@using Kendo.Mvc.UI;
+@using CES.Core.Models;
+@section FooterContent{
+    <script type="text/javascript">
+        _base["PrgID"] = "P_BM_01";
+        _menu.editClick = function () {
+            var grid = $("#Grid").data("kendoGrid");
+            var selectRow = grid.select();
+            if (selectRow.length <= 0) {
+                var evt = window.event || arguments.callee.caller.arguments[0];
+                selectRow = $(evt.srcElement || evt.target).parents("tr");
+            }
+
+            var dataItem = grid.dataItem(selectRow);            
+            if (dataItem["PrgID"] == "FA001")
+                top.createTab("Borrow/See/" + dataItem["DataNbr"], "", "@CES.Core.Common.CommonSupport.GetLanguageByCode("publictipinfo_menu_edit")-@CES.Core.Common.CommonSupport.GetLanguageByCode("fa001")");
+            if (dataItem["PrgID"] == "AC001")
+                top.createTab("BusVerificate/See/" + dataItem["DataNbr"], "", "@CES.Core.Common.CommonSupport.GetLanguageByCode("publictipinfo_menu_edit")-@CES.Core.Common.CommonSupport.GetLanguageByCode("ac001")");
+            if (dataItem["PrgID"] == "AC002")
+                top.createTab("PubPaymentDoc/See/" + dataItem["DataNbr"], "", "@CES.Core.Common.CommonSupport.GetLanguageByCode("publictipinfo_menu_edit")-@CES.Core.Common.CommonSupport.GetLanguageByCode("ac002")");
+            if (dataItem["PrgID"] == "BT003")
+                top.createTab("BtripVerDoc/See/" + dataItem["DataNbr"], "", "@CES.Core.Common.CommonSupport.GetLanguageByCode("publictipinfo_menu_edit")-@CES.Core.Common.CommonSupport.GetLanguageByCode("bt003")");
+        }
+        function onDataBound(e) {
+            $(".k-i-cancel").remove();
+            e.sender.tbody.find("tr").dblclick(function () {
+                _menu.editClick();
+            });
+        }
+    </script>
+}
+@Html.Partial("_Partial_index_1", new CES.Core.Models.PageInfo
+{
+    prgID = "P_BM_01",
+    prgName = CES.Core.Common.CommonSupport.GetPageTitle("p_bm_01_docimagedetail_ledger")
+})
+<div class="ap-order-outline ap-orderlist-outline" id="ap-order-outline">
+    @Html.Partial("_Condition")
+</div>
+<div class="ap-order-scroll ap-orderlist-scroll" id="ap-order-scroll">
+    <div class="am-scrollable-horizontal">
+        @{Html.RenderAction("GetPartialIndex", new {bCheckBoxColumn = false, bOperationColumn = false });}
+    </div>
+</div>
+
+

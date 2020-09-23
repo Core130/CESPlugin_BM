@@ -1,0 +1,73 @@
+﻿@using Kendo.Mvc.UI;
+@using CES.Core.Cache;
+@using CES.Core.Common;
+@using CES.Core.Models;
+@{
+    var curDate = DateTime.Now;
+    var company = CurUserInfo.GetCurDBAccount;
+}
+<div id="searchform" style="display:none">
+    <div class="col-md-defined-1  col-md-defined-90">
+        <label for="CompanyCode">@CES.Core.Common.CommonSupport.GetLanguageByCode("depbudgetused_g_budgetexecstatisticallist_01")</label>
+        @(Html.Kendo().DropDownList().Name("CompanyCode")
+                        .BindTo(CES.Core.Cache.CacheDataManager.GetAllAccountInfo().Select(p => new { Text = p.AccountName + "(" + p.AccountCode + ")", Value = p.AccountCode }))
+                        .DataTextField("Text")
+                        .DataValueField("Value").Value("1101")
+                        .OptionLabel(CES.Core.Common.CommonSupport.GetLanguageByCode("public_please_swith"))
+                        .HtmlAttributes(new { style = "width:345px;float:left;" }))
+        <div class="an-cls"></div>
+    </div>
+    <div class="col-md-defined-2">
+        <label>上传日期</label>
+        @(Html.Kendo().DatePicker().Name("DateFm").Format("yyyy-MM-dd").Value(curDate.AddDays(1 - curDate.Day)).HtmlAttributes(new { @style = "width:100%" }))
+        <div class="an-cls"></div>
+    </div>
+    <div class="col-md-defined-2">
+        <label>至</label>
+        @(Html.Kendo().DatePicker().Name("DateTo").Format("yyyy-MM-dd").Value(curDate).HtmlAttributes(new { @style = "width:100%" }))
+        <div class="an-cls"></div>
+    </div>    
+    <div class="col-md-defined-2" style="display:none">
+        <input name="PrgID" type="text" id="PrgID" value="P_BM_01" />
+        <div class="an-cls"></div>
+    </div>
+    <div class="col-md-defined-2" style="display:none">
+        <input name="Compan" type="text" id="Compan" value="@company" />
+        <div class="an-cls"></div>
+    </div>
+    <div class="col-md-defined-10" style="float:right">
+        <button class="k-button btn2" onclick="query();" type="button">@CES.Core.Common.CommonSupport.GetLanguageByCode("public_btn_query")</button>
+        <button class="k-button btn1" onclick="$('#searchform').data('kendoWindow').close()" type="button">@CES.Core.Common.CommonSupport.GetLanguageByCode("public_btn_cancel")</button>
+        <div class="an-cls"></div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $("#searchform").kendoWindow({
+            title: "查询",
+            width: 490,
+            modal: true
+        });
+    });
+
+    function getQueryParams() {
+        return { "PrgID": "P_BM_01", "Compan": "@company" };
+    }
+
+    function query(type) {
+        var win = $("#searchform").data("kendoWindow");
+        if (type) {
+            win.setOptions({
+                position: {
+                    top: $(document).scrollTop() + 10,
+                    left: "calc(50% - 245px)",
+                }
+            });
+            win.open();
+            return;
+        }
+        _menu.queryClick()
+        win.close();
+    }
+</script>
+
