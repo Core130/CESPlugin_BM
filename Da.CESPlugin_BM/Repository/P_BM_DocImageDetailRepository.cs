@@ -18,6 +18,7 @@ namespace Da.CESPlugin_BM.Repository
             var curuow = UnitOfWork as MainBCUnitOfWork;
             string sql = string.Format(@"SELECT c.PrgID, d.CompanyName, c.Descr PrgName,a.DataNbr,b.docdate DocDate,b.totalcost,a.CrtDate ImgCrtDate,a.ID,
                                     CASE WHEN b.[Status] = 'Draft' THEN '草稿' ELSE '非草稿' END DocStatus  
+                                    INTO #temp_Imageslist
                                     FROM CESImage.dbo.Images a
                                     INNER JOIN DocList b ON a.DataNbr = b.DataNbr
                                     INNER JOIN Programs c ON c.PrgID = b.PrgID
@@ -36,7 +37,7 @@ namespace Da.CESPlugin_BM.Repository
             {
                 sql += string.Format(@" AND a.CrtDate <= '{0} 23:59:59'", DateTo);
             }
-            sql += " ORDER BY a.ID ASC";
+            sql += " ;SELECT * FROM #temp_Imageslist ORDER BY ID";
             
             return curuow.ExecuteQuery<P_BM_DocImageDetail>(sql);
         }
