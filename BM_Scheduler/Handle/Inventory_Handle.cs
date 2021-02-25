@@ -16,8 +16,7 @@ namespace BM_Scheduler.Handle
                              FROM Bama_NCInvbasdoc a
                             INNER JOIN Bama_NCMeasdoc b ON b.pk_measdoc =  a.pk_measdoc
                             LEFT  JOIN Bama_NCTariffItem c ON c.cinventoryid =  a.pk_invmandoc
-                            WHERE a.iState = 0 OR c.iState = 0 OR b.iState = 0
-                            )";
+                            WHERE a.iState = 0 OR c.iState = 0 OR b.iState = 0";
             var ds = SqlHelper.ExecuteDataset(CommandType.Text, sql);
             if (ds.Tables[0].Rows.Count > 0)
             {

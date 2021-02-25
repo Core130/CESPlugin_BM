@@ -52,13 +52,13 @@ namespace BM_Scheduler.Handle
                             invshortname, invspec, invtype, pk_measdoc, ts, DModify, iState)
                             VALUES(@pk_invbasdoc, @pk_invmandoc, @invcode, @invname,
                             @invshortname, @invspec, @invtype, @pk_measdoc, @ts, @DModify, @iState)
-                            ELSE(
+                            ELSE
 	                            UPDATE Bama_NCInvbasdoc 
 	                            SET pk_invbasdoc=@pk_invbasdoc,	invcode =@invcode,	invname=@invname,invshortname=@invshortname,
 	                            invspec=@invspec,invtype=@invtype,pk_measdoc=@pk_measdoc,ts=@ts,DModify=@DModify,iState=@iState
 	                            WHERE pk_invmandoc = @pk_invmandoc
-                        )";
-            for (int i =0; i <= dataList.Count;i++)
+                        ";
+            for (int i =0; i < dataList.Count;i++)
             {
                 SqlParameter[] paras =
                 {

@@ -45,7 +45,6 @@ namespace BM_Scheduler.Handle
 
             UpdateNCMeasdoc(dataList);
 
-
             return 1;
         }
         public void UpdateNCMeasdoc(List<NCMeasdoc> dataList)
@@ -53,12 +52,12 @@ namespace BM_Scheduler.Handle
             string sql = @"IF NOT EXISTS(SELECT 1 FROM Bama_NCMeasdoc WHERE pk_measdoc = @pk_measdoc)
                             INSERT INTO Bama_NCMeasdoc(pk_measdoc, measname, shortname,ts, DModify,iState )
                             VALUES(@pk_measdoc, @measname, @shortname,@ts, @DModify, @iState)
-                            ELSE(
+                            ELSE
 	                            UPDATE Bama_NCMeasdoc 
 	                            SET measname=@measname,	shortname =@shortname,ts=@ts,DModify=@DModify,iState=@iState
 	                            WHERE pk_measdoc = @pk_measdoc
-                            )";
-            for (int i = 0; i <= dataList.Count; i++)
+                            ";
+            for (int i = 0; i < dataList.Count; i++)
             {
                 SqlParameter[] paras =
                 {
@@ -70,6 +69,7 @@ namespace BM_Scheduler.Handle
                  new SqlParameter("@iState","0"),
             };
                 SqlHelper.ExecuteNonQuery(CommandType.Text, sql, paras);
+                
             }
         }
 

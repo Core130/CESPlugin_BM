@@ -45,7 +45,7 @@ namespace BM_Scheduler.Scheduler
             NCMeasdoc_Handle ncmeasdoc_Handle = new NCMeasdoc_Handle();
             for (int j = 0; j < 100; j++)
             {
-                int invFlag = ncmeasdoc_Handle.GetNCTariffItem(ts2, j * 50, 50);
+                int invFlag = ncmeasdoc_Handle.GetNCTariffItem(ts2, j * 50, 50);                
                 if (invFlag == 0)
                 {
                     Trace.WriteLine("计量单位对接完成执行,正常结束...");

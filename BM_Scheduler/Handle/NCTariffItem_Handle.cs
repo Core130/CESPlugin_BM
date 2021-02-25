@@ -53,12 +53,12 @@ namespace BM_Scheduler.Handle
             string sql = @"IF NOT EXISTS(SELECT 1 FROM Bama_NCTariffItem WHERE cinventoryid = @cinventoryid)
                             INSERT INTO Bama_NCTariffItem(cinventoryid, nprice1,ts, DModify,iState )
                             VALUES(@cinventoryid, @nprice1,@ts, @DModify, @iState)
-                            ELSE(
+                            ELSE
 	                            UPDATE Bama_NCTariffItem 
 	                            SET nprice1=@nprice1,ts=@ts,DModify=@DModify,iState=@iState
 	                            WHERE cinventoryid = @cinventoryid
-                            )";
-            for (int i = 0; i <= dataList.Count; i++)
+                            ";
+            for (int i = 0; i < dataList.Count; i++)
             {
                 SqlParameter[] paras =
                 {

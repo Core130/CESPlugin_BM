@@ -480,7 +480,7 @@ namespace BM_Scheduler.Handle
         /// <returns></returns>
         public static string getxmlvalue(string sytime)
         {
-            string result = "";
+            string result;
             string sql = @"SELECT TOP 1 sytime FROM Bama_NCTime WHERE syName = @syName";
             SqlParameter[] paras =
                 {
@@ -503,15 +503,9 @@ namespace BM_Scheduler.Handle
         /// <param name="sytime"></param>
         /// <param name="vlues"></param>
         public static void setxmlvalue(string syName, string tableName)
-        {
-
-            string sql = @"UPDATE Bama_NCTime SET sytime = (SELECT MAX(ts) FROM @tableName) WHERE syName = @syName";
-            SqlParameter[] paras =
-                {                 
-                 new SqlParameter("@syName",syName),
-                 new SqlParameter("@tableName",tableName),
-            };
-            SqlHelper.ExecuteNonQuery(CommandType.Text,sql, paras);
+        {            
+            string sql = string.Format(@"UPDATE Bama_NCTime SET sytime = ISNULL((SELECT MAX(ts) FROM {1}),GETDATE()) WHERE syName = '{0}'", syName, tableName);
+            SqlHelper.ExecuteNonQuery(CommandType.Text, sql);
         }
 
     }

@@ -42,7 +42,7 @@ IF NOT EXISTS (SELECT 1 FROM Bama_NCTime WHERE syName IN ('NCInvbasdoc','NCTarif
 INSERT INTO Bama_NCTime(sytime, syName, remark)
 SELECT GETDATE(),'NCInvbasdoc','商品档案'
 UNION
-SELECT '2000-01-01','NCTariffItem','计量单位'
+SELECT '2000-01-01','NCMeasdoc','计量单位'
 UNION
-SELECT GETDATE(),'NCMeasdoc','商品价格'
+SELECT GETDATE(),'NCTariffItem','商品价格'
 GO
