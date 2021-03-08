@@ -826,9 +826,10 @@ namespace BM_Scheduler.Handle
         /// <param name="commandType">命令类型 (存储过程,命令文本或其它)</param>
         /// <param name="commandText">存储过程名或T-SQL语句</param>
         /// <returns>返回包含结果集的SqlDataReader</returns>
-        public static SqlDataReader ExecuteReader(string connectionString, CommandType commandType, string commandText)
+        public static SqlDataReader ExecuteReader(CommandType commandType, string commandText)
         {
-            return ExecuteReader(connectionString, commandType, commandText, (SqlParameter[])null);
+            connString = GetConnSting();
+            return ExecuteReader(connString, commandType, commandText, (SqlParameter[])null);
         }
 
         /// <summary>

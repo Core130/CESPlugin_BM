@@ -17,8 +17,8 @@ namespace BM_Scheduler.Handle
                             INNER JOIN Bama_NCMeasdoc b ON b.pk_measdoc =  a.pk_measdoc
                             LEFT  JOIN Bama_NCTariffItem c ON c.cinventoryid =  a.pk_invmandoc
                             WHERE a.iState = 0 OR c.iState = 0 OR b.iState = 0";
-            var ds = SqlHelper.ExecuteDataset(CommandType.Text, sql);
-            if (ds.Tables[0].Rows.Count > 0)
+            var dr = SqlHelper.ExecuteReader(CommandType.Text, sql);
+            while (dr.Read())
             {
                 string sql1 = @"IF NOT EXISTS (SELECT 1 FROM P_Inventory WHERE InvCode = @InvCode)
                                 INSERT INTO P_Inventory(CompanyCode, InvCode, InvName, Unit, UnitPrice, EffDate,
@@ -32,16 +32,14 @@ namespace BM_Scheduler.Handle
                                 UPDATE Bama_NCInvbasdoc SET iState = @iState,DModify = @DModify WHERE pk_invmandoc = @pk_invmandoc;
                                 UPDATE Bama_NCMeasdoc SET iState = @iState,DModify = @DModify WHERE pk_measdoc = @pk_measdoc;
                                 UPDATE Bama_NCTariffItem SET iState = @iState,DModify = @DModify WHERE cinventoryid = @pk_invmandoc;";
-                var dataList = ds.Tables.Cast<DataTable>().ToList();
-                for (int i = 0; i <= dataList.Count; i++)
+
+                SqlParameter[] paras =
                 {
-                    SqlParameter[] paras =
-                    {
                         new SqlParameter("@CompanyCode","1101"),
-                        new SqlParameter("@InvCode",dataList[i].Columns["invcode"].ToString()),
-                        new SqlParameter("@InvName",dataList[i].Columns["invname"].ToString()),
-                        new SqlParameter("@Unit",dataList[i].Columns["measname"].ToString()),
-                        new SqlParameter("@UnitPrice",dataList[i].Columns["nprice1"].ToString()),
+                        new SqlParameter("@InvCode",dr[0].ToString()),
+                        new SqlParameter("@InvName",dr[1].ToString()),
+                        new SqlParameter("@Unit",dr[2].ToString()),
+                        new SqlParameter("@UnitPrice",string.IsNullOrWhiteSpace(dr[3].ToString()) ? "0.00" : dr[3].ToString()),
                         new SqlParameter("@EffDate",DateTime.Now),
                         new SqlParameter("@CrtUser","admin"),
                         new SqlParameter("@CrtDate",DateTime.Now),
@@ -52,11 +50,13 @@ namespace BM_Scheduler.Handle
                         new SqlParameter("@CrtUserName","管理员"),
                         new SqlParameter("@UpdateUserName","管理员"),
                         new SqlParameter("@AccCompany","1101"),
-                        new SqlParameter("@pk_invmandoc",dataList[i].Columns["pk_invmandoc"].ToString()),
-                        new SqlParameter("@pk_measdoc",dataList[i].Columns["pk_measdoc"].ToString()),                        
+                        new SqlParameter("@pk_invmandoc",dr[4].ToString()),
+                        new SqlParameter("@pk_measdoc",dr[5].ToString()),
+                        new SqlParameter("@iState","1"),
+                        new SqlParameter("@DModify",DateTime.Now),
                      };
-                    SqlHelper.ExecuteNonQuery(CommandType.Text, sql1, paras);
-                }
+                SqlHelper.ExecuteNonQuery(CommandType.Text, sql1, paras);
+
             }
         }
     }
