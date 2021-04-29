@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Da.CESPlugin_BM", "Da.CESPl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI.CESPlugin_BM", "UI.CESPlugin_BM\UI.CESPlugin_BM.csproj", "{8F604D8A-48FE-4C79-A576-A28F74FDB9A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BM_Scheduler", "BM_Scheduler\BM_Scheduler.csproj", "{560024B9-3271-4480-864A-8232D2F624C9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{8F604D8A-48FE-4C79-A576-A28F74FDB9A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F604D8A-48FE-4C79-A576-A28F74FDB9A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F604D8A-48FE-4C79-A576-A28F74FDB9A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{560024B9-3271-4480-864A-8232D2F624C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{560024B9-3271-4480-864A-8232D2F624C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{560024B9-3271-4480-864A-8232D2F624C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{560024B9-3271-4480-864A-8232D2F624C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
